@@ -79,6 +79,8 @@ class IntraProceduralGraphBuilder extends ControlFlowGraphBuilder {
         g // returns g
       case WhileStmt(_, whileStmt) =>
         processStmtNode(from, whileStmt, target, g) // returns the recursiv call
+      case RepeatUntilStmt(_, repeatUntilStmt) =>
+        processStmtNode(from, repeatUntilStmt, target, g)
       case ForStmt(init,_ ,forStmt) =>
         processStmtNode(init, forStmt, target, g)
       case CaseStmt(_, cases, optionalElseStmt) =>
@@ -94,7 +96,7 @@ class IntraProceduralGraphBuilder extends ControlFlowGraphBuilder {
           processStmtNode(from, optionalElseStmt.get, target, g)
         else g += SimpleNode(from) ~> SimpleNode(target.get)
         g
-      case _ => g // if not a compound stmt (e.g., procedure call, assignment, ...), just return the graph g
+      case _ => g // if not a compound stmt (e.g., procedure call, assignment, ...), just return the graph
     }
   }
   /**

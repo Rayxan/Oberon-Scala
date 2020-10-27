@@ -66,6 +66,8 @@ class Interpreter extends OberonVisitorAdapter {
       case WriteStmt(exp) => println(evalExpression(exp))
       case IfElseStmt(condition, thenStmt, elseStmt) => if (evalCondition(condition)) thenStmt.accept(this) else if (elseStmt.isDefined) elseStmt.get.accept(this)
       case WhileStmt(condition, whileStmt) => while (evalCondition(condition)) whileStmt.accept(this)
+//      case RepeatUntilStmt(repeatUntilStmt, condition) => do repeatUntilStmt.accept(this) while (evalCondition(condition))  //-------
+      case RepeatUntilStmt(repeatUntilStmt, condition) => while (evalCondition(condition)) repeatUntilStmt.accept(this) //---
       case ForStmt(init, condition, block) => init.accept(this); while (evalCondition(condition)) block.accept(this)
       case CaseStmt(exp, cases, elseStmt) =>
         var v = evalExpression(exp)

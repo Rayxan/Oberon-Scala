@@ -79,6 +79,7 @@ case class WhileStmt(condition: Expression, stmt: Statement) extends Statement
 case class ForStmt(init: Statement, condition: Expression, stmt: Statement) extends Statement
 case class ReturnStmt(exp: Expression) extends Statement
 case class CaseStmt(exp: Expression, cases: List[CaseAlternative], elseStmt: Option[Statement]) extends Statement
+case class RepeatUntilStmt(stmt: Statement, condition: Expression) extends Statement //---
 
 trait CaseAlternative {
   def accept(v: OberonVisitor) = v.visit(this)

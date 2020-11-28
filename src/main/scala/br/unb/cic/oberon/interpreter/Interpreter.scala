@@ -60,7 +60,7 @@ class Interpreter extends OberonVisitorAdapter {
     }
     // otherwise, we pattern-match on the current stmt.
     stmt match {
-      case AssignmentStmt(name, exp) => env.setVariable(name, evalExpression(exp))
+      //case AssignmentStmt(name, exp) => env.setVariable(name, evalExpression(exp))
       case SequenceStmt(stmts) => stmts.foreach(s => s.accept(this))
       case ReadIntStmt(name) => env.setVariable(name, IntValue(StdIn.readLine().toInt))
       case WriteStmt(exp) => println(evalExpression(exp))

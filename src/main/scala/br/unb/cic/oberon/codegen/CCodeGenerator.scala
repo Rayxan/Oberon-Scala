@@ -112,12 +112,16 @@ case class PaigesBasedGenerator(lineSpaces: Int = 2) extends CCodeGenerator {
       padSpaces: Int = 2
   ): Doc = {
     statement match {
+	
+	/*
       case AssignmentStmt(varName, expression) =>
         formatLine(startSpaces) + Doc.text(varName) + Doc.space + Doc.char(
           '='
         ) + Doc.space + generateExpression(expression) + Doc.char(
           ';'
         ) + Doc.line
+	*/
+		
       case SequenceStmt(stmts) => {
         val multipleStmts = stmts.map {
           case (stmt) => generateStatement(stmt, startSpaces, padSpaces)
@@ -189,6 +193,8 @@ case class PaigesBasedGenerator(lineSpaces: Int = 2) extends CCodeGenerator {
           formatLine(startSpaces) + Doc.text("} while (!(") +
           generateExpression(condition) + Doc.text("));") + Doc.line
       }
+	  
+	  /*
       case ForStmt(init: Statement, condition, stmt) => {
         init match {
           case AssignmentStmt(varName, expression) => {
@@ -212,7 +218,8 @@ case class PaigesBasedGenerator(lineSpaces: Int = 2) extends CCodeGenerator {
           case _ => Doc.empty
         }
       }
-
+	  */
+	  
       case ReturnStmt(exp) =>
         formatLine(startSpaces) + Doc.text("return ") + generateExpression(
           exp

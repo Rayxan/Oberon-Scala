@@ -51,14 +51,13 @@ expression
  ;
 
 statement
- : var = Id ':=' exp = expression                                                                                             #AssignmentStmt
- | des = designator ':=' exp = expression                                                                                     #EAssignmentStmt
+ : des = designator ':=' exp = expression                                                                                             #AssignmentStmt
  | stmt += statement (';' stmt += statement)+                                                                                 #SequenceStmt
  | 'readInt'  '(' var = Id ')'                                                                                                #ReadIntStmt
  | 'write' '(' expression ')'                                                                                                 #WriteStmt
  | name = Id '(' arguments? ')'                                                                                               #ProcedureCall
  | 'IF' cond = expression 'THEN' thenStmt = statement ('ELSE' elseStmt = statement)? 'END'                                    #IfElseStmt
- | 'IF' cond = expression 'THEN' thenStmt = statement ('ELSIF' elsifs += elseIfStmt)+ ('ELSE' elseStmt = statement)? 'END'    #IfElseIfStmt
+ | 'IF' cond = expression 'THEN' thenStmt = statement ('ELSIF' elsifs += elseIfStmt)+ ('ELSE' elseStmt = statement)? 'END'                                 #IfElseIfStmt
  | 'WHILE' cond = expression 'DO' stmt = statement 'END'                                                                      #WhileStmt
  | 'REPEAT' stmt = statement 'UNTIL' cond = expression                                                                        #RepeatUntilStmt
  | 'FOR' init = statement 'TO' condition = expression 'DO' stmt = statement 'END'                                             #ForStmt
@@ -67,17 +66,16 @@ statement
  | 'CASE' exp = expression 'OF' cases += caseAlternative ('|' cases += caseAlternative)* ('ELSE' elseStmt= statement)? 'END'  #CaseStmt
  ;
 
-designator
- : var = Id                                               #Var
- | array = expression '['INT']'                           #ArrayIndex
- | record = expression '.' name = Id                               #Record
- ;
+ designator
+  : var = Id                                                          #varAssignment
+  | array = expression '[' elem = expression ']'                      #arrayAssignment
+  | record = designator '.' designator                                #Record
+  ;
 
 caseAlternative
  : cond = expression ':' stmt = statement                       #SimpleCase
  | min = expression '..' max = expression ':' stmt = statement  #RangeCase
  ; 
-
 
 elseIfStmt : cond = expression 'THEN' stmt = statement ;
 

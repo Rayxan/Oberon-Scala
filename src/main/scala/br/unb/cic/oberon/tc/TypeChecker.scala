@@ -57,7 +57,7 @@ class TypeChecker extends OberonVisitorAdapter {
   }
 
   override def visit(stmt: Statement) = stmt match {
-    case AssignmentStmt(_, _) => visitAssignment(stmt)
+    //case AssignmentStmt(_, _) => visitAssignment(stmt)
     case IfElseStmt(_, _, _) => visitIfElseStmt(stmt)
     case IfElseIfStmt(_, _, _, _) => visitIfElseIfStmt(stmt)
     case WhileStmt(_, _) => visitWhileStmt(stmt)
@@ -70,8 +70,9 @@ class TypeChecker extends OberonVisitorAdapter {
     case ReadIntStmt(v) => if(env.lookup(v).isDefined) List() else List((stmt, s"Variable $v not declared."))
     case WriteStmt(exp) => if(exp.accept(expVisitor).isDefined) List() else List((stmt, s"Expression $exp is ill typed."))
   }
-
+/*
   private def visitAssignment(stmt: Statement) = stmt match {
+  
     case AssignmentStmt(v, exp) =>
       if (env.lookup(v).isDefined) {
         if (exp.accept(expVisitor).isDefined)
@@ -80,7 +81,7 @@ class TypeChecker extends OberonVisitorAdapter {
       }
       else List((stmt, s"Variable $v not declared"))
   }
-
+*/
   private def visitIfElseStmt(stmt: Statement) = stmt match {
     case IfElseStmt(condition, thenStmt, elseStmt) =>
       if(condition.accept(expVisitor).contains(BooleanType)) {
